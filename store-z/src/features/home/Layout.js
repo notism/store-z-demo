@@ -24,7 +24,8 @@ const drawerWidth = 280;
 
 const styles = theme => ({
   root: {
-    display: 'flex',    
+    display: 'flex',   
+    height: '100vh', 
   }, 
   appBar: {
     background: '#096FAE',
@@ -115,7 +116,7 @@ class Layout extends Component {
     const { anchorElProfileMenu, mobileOpen } = this.state;
     return (
       <MuiThemeProvider theme={theme}>
-      <div className={classes.root}>
+      <div className={classes.root} >
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar} color="primary">
           <Toolbar className={classes.toolBar}>

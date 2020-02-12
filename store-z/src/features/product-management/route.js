@@ -2,13 +2,13 @@
 // Learn more from: http://rekit.js.org/docs/routing.html
 
 import {
-  DefaultPage,
+  ProductManagementPage,
 } from './';
 
 export default {
   path: 'product-management',
   name: 'Product management',
   childRoutes: [
-    { path: 'default-page', name: 'Default page', component: DefaultPage, isIndex: true },
+    { path: 'product-management-page', name: 'Product management page', component: ProductManagementPage, isIndex: true },
   ],
 };

@@ -1,15 +1,35 @@
 import axios from 'axios';
 import { getTokenInfo } from './authenUser';
-import { resources, loadLocalization } from './configLocalization.js';
+// import { resources, loadLocalization } from './configLocalization.js';
 import { handleEnqueueSnackbar } from './configSnackbar';
 
 const ENDPOINT = [
-  'https://nodejs-user-api-demo.herokuapp.com/api/user/',
-  'https://nodejs-prod-api-demo.herokuapp.com/api/prod/',
+  'https://nodejs-user-api-demo.herokuapp.com/user/api/',
+  'https://nodejs-prod-api-demo.herokuapp.com/prod/api/',
 ];
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json';
+
+export const GET00 = (endpointIndex = 0, route = ``, filter = {}, enqueueSnackbar) => {
+  const accessToken = getTokenInfo() || {};
+  return new Promise((resolve, reject) => {
+    const url = `${ENDPOINT[endpointIndex]}/${route}?filter=${JSON.stringify(filter)}`;
+    axios
+      .get(url)
+      .then(
+        res => {
+          resolve(res);
+        },
+        err => {
+          reject(handleFetchError(err, enqueueSnackbar));
+        },
+      )
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
 
 export const GET = (endpointIndex = 0, route = ``, filter = {}, enqueueSnackbar) => {
   const accessToken = getTokenInfo() || {};
@@ -119,13 +139,12 @@ export const GET_PARAMS = (
 };
 
 export const GET_WHERE = (endpointIndex = 0, route = ``, filter = {}, enqueueSnackbar) => {
-  
   const accessToken = getTokenInfo() || {};
   return new Promise((resolve, reject) => {
     const url = `${ENDPOINT[endpointIndex]}/${route}?access_token=${
       accessToken.id
     }&where=${JSON.stringify(filter)}`;
-    console.log("2345654w",url)
+    console.log('2345654w', url);
     axios
       .get(url)
       .then(
@@ -141,7 +160,6 @@ export const GET_WHERE = (endpointIndex = 0, route = ``, filter = {}, enqueueSna
       });
   });
 };
-
 
 export const POST = (endpointIndex = 0, route = ``, data = {}, enqueueSnackbar) => {
   const accessToken = getTokenInfo() || {};
@@ -192,15 +210,20 @@ const handleFetchError = (err, enqueueSnackbar) => {
     if (error) {
       if (enqueueSnackbar !== '') {
         //console.log(err.response.data.error.statusCode,'statusCode')
-        const lang = loadLocalization();
-        if (lang === 'en') {
-          handleEnqueueSnackbar(enqueueSnackbar, err.response.data.error.message.EN, 'error');
-        } else if (lang === 'th') {
-          //console.log(err.response.data.error.message.TH,'messgaeTH')
-          handleEnqueueSnackbar(enqueueSnackbar, err.response.data.error.message.TH, 'error');
-        } else {
-          handleEnqueueSnackbar(enqueueSnackbar, err.response.data.error.message.CN, 'error');
-        }
+      
+          handleEnqueueSnackbar(enqueueSnackbar, "เกิดข้อผิดพลาด", 'error');
+     
+     
+
+        // const lang = loadLocalization();
+        // if (lang === 'en') {
+        //   handleEnqueueSnackbar(enqueueSnackbar, err.response.data.error.message.EN, 'error');
+        // } else if (lang === 'th') {
+        //   //console.log(err.response.data.error.message.TH,'messgaeTH')
+        //   handleEnqueueSnackbar(enqueueSnackbar, err.response.data.error.message.TH, 'error');
+        // } else {
+        //   handleEnqueueSnackbar(enqueueSnackbar, err.response.data.error.message.CN, 'error');
+        // }
       }
       ////console.log(err.response.data.error.message,'mess')
       let statusCode = err.response.data.error.statusCode;
@@ -216,16 +239,16 @@ const handleFetchError = (err, enqueueSnackbar) => {
               let msg_alert = '';
               let error_message = error.details.messages[index][0];
               if (error_message.includes(`can't be blank`)) {
-                msg_alert = `${index} ${resources.msgCantBeBlank}`;
+                msg_alert = `${index} can't be blank`;
               } else if (error_message.includes(`is invalid`)) {
-                msg_alert = `${index} ${resources.msgIsInvalid}`;
+                msg_alert = `${index} is invalid`;
               } else if (error_message.includes(`already exists`)) {
-                msg_alert = `${index} ${resources.msgAlreadyExists}`;
+                msg_alert = `${index} already exists`;
               }
               handleEnqueueSnackbar(enqueueSnackbar, msg_alert, 'error');
               break;
             case 'username':
-              handleEnqueueSnackbar(enqueueSnackbar, resources.msgUsernameAlreadyExists, 'error');
+              handleEnqueueSnackbar(enqueueSnackbar, "can't be blank", 'error');
               break;
             default:
               //console.log(index);
