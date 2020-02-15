@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Button from '../common/ButtonWaitingLoad';
 export default class ButtonUpdate extends Component {
   static propTypes = {
 
@@ -8,7 +8,15 @@ export default class ButtonUpdate extends Component {
   render() {
     return (
       <div className="product-management-button-update">
-        Component content: product-management/ButtonUpdate
+       <Button
+                        
+                        type="submit"
+                       
+                        color="primary"
+                      
+                      >
+                        update
+                      </Button>
       </div>
     );
   }

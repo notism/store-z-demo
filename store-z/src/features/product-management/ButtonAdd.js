@@ -166,6 +166,12 @@ function SwipeableTemporaryDrawer() {
     left: false,
     bottom: false,
     right: false,
+    product: {
+      productName: '',
+      description: '',
+      type: '',
+      price: 0,
+    },
   });
 
   const toggleDrawer = (side, open) => event => {
@@ -176,6 +182,26 @@ function SwipeableTemporaryDrawer() {
     setState({ ...state, [side]: open });
   };
 
+  const handleChange = name => event => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    setState(
+      {
+        
+          ...state.product,
+          [name]: value,
+       
+      },
+      
+      // () => {
+      //   console.log(state.product, 'add product');
+      // },
+    );
+    console.log(state.product, 'add product');
+  };
+
   const sideList = side => (
     <div
       className={classes.list}
@@ -183,42 +209,58 @@ function SwipeableTemporaryDrawer() {
       onClick={toggleDrawer(side, true)}
       onKeyDown={toggleDrawer(side, true)}
     >
-  <form >
+      <form>
         <Table className={classes.table}>
           <TableBody>
             <TableRow>
               <TableCell align="left">
                 <DialogContent>
                   <DialogContentText className={classes.inputtext}>
-                    product
                     <TextField
                       required
                       type="text"
-                      placeholder="Ex. PROD A"
+                      placeholder="ชื่อสินค้า"
                       name="productName"
                       InputProps={{ classes: { input: classes.inputtext } }}
-                     
+                      
                       fullWidth
                     />
                   </DialogContentText>
                   <DialogContentText className={classes.inputtext}>
-                    description
                     <TextField
                       required
                       type="text"
-                      placeholder="EX. Paper"
+                      placeholder="คำอธิบาย"
                       name="description"
                       InputProps={{ classes: { input: classes.inputtext } }}
-                  
+                      onChange={handleChange('description')}
+                      fullWidth
+                    />
+                  </DialogContentText>
+                  <DialogContentText className={classes.inputtext}>
+                    <TextField
+                      required
+                      type="text"
+                      placeholder="ประเภท"
+                      name="type"
+                      InputProps={{ classes: { input: classes.inputtext } }}
+                      onChange={handleChange('type')}
+                      fullWidth
+                    />
+                  </DialogContentText>
+                  <DialogContentText className={classes.inputtext}>
+                    <TextField
+                      required
+                      type="number"
+                      placeholder="ราคา"
+                      name="price"
+                      InputProps={{ classes: { input: classes.inputtext } }}
+                      onChange={handleChange('price')}
                       fullWidth
                     />
                   </DialogContentText>
                   <DialogActions>
-                    <Button
-                     
-                      variant="outlined"
-                      className={classes.button2}
-                    >
+                    <Button variant="outlined" className={classes.button2}>
                       ยกเลิก
                     </Button>
                     {
@@ -234,7 +276,9 @@ function SwipeableTemporaryDrawer() {
                       <Button
                         className={classes.button}
                         type="submit"
-                        style={{ fontSize: 15, color: 'white' }}
+                        style={{ fontSize: 15 }}
+                        color="primary"
+                        variant="outlined"
                       >
                         ยืนยัน
                       </Button>

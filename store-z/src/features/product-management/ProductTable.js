@@ -404,10 +404,8 @@ export default class ProductTable extends Component {
         },
       },
     ];
-    return (
-      <MuiThemeProvider theme={this.getMuiTheme()}>
-        <MUIDataTable data={data} columns={columns} options={options} />
-      </MuiThemeProvider>
+    return (     
+        <MUIDataTable data={data} columns={columns} options={options} />   
     );
   }
 }

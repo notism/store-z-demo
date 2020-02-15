@@ -31,6 +31,27 @@ export const GET00 = (endpointIndex = 0, route = ``, filter = {}, enqueueSnackba
   });
 };
 
+export const POST00 = (endpointIndex = 0, route = ``, data = {}, enqueueSnackbar) => {
+  const accessToken = getTokenInfo() || {};
+  return new Promise((resolve, reject) => {
+    const url = `${ENDPOINT[endpointIndex]}/${route}`;
+    axios
+      .post(url, { ...data })
+      .then(
+        res => {
+          resolve(res);
+        },
+        err => {
+          //console.log(err.response.data,'reject')
+          reject(handleFetchError(err, enqueueSnackbar));
+        },
+      )
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
 export const GET = (endpointIndex = 0, route = ``, filter = {}, enqueueSnackbar) => {
   const accessToken = getTokenInfo() || {};
   return new Promise((resolve, reject) => {

@@ -54,22 +54,20 @@ export class ProductManagementPage extends Component {
     const { product, getProductPending } = this.props.productManagement;
     return (
       <div className="product-management-product-management-page">
-        <Card margin>
-          <CardContent>
+       
             <Typography>
               <CardHeader>คลังสินค้า</CardHeader>
             </Typography>
             <Divider />
-            <Typography>
+           
               <CardContent />
-            </Typography>
+            
             {getProductPending ? (
               <CircularProgress />
             ) : (
               <ProductTable reload={this.reload} data={product} actions={this.props.actions} />
             )}
-          </CardContent>
-        </Card>
+    
       </div>
     );
   }

@@ -6,11 +6,6 @@
 
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
 const initialState = {
-  product: [],
-  getProductPending: false,
-  getProductError: null,
-  addProductPending: false,
-  addProductError: null,
 };
 
 export default initialState;
